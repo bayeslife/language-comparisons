@@ -1,5 +1,32 @@
 # Learning Python as a Javascript Developer
 
+Style
+- Google Python Style Guide: https://google.github.io/styleguide/pyguide.html 
+- PEP-008 Style Guide for Python Code: https://www.python.org/dev/peps/pep-0008/ 
+- PEP-257 Doc String Conventions: https://www.python.org/dev/peps/pep-0257/ 
+- PEP-020 The Zen of Python: https://www.python.org/dev/peps/pep-0020/ 
+- Hitchhiker’s Guide to Python: https://docs.python-guide.org/writing/style/
+- Documentation: https://realpython.com/documenting-python-code/ 
+
+Tooling
+- Linting: https://www.pylint.org/
+- Formatting: https://github.com/python/black
+- Testing: https://docs.pytest.org/en/latest/
+- Dependency Management: https://poetry.eustace.io/
+
+## Comments
+- javascript: C style comments
+```
+// This is a single line comment
+/**
+* THis is a multiple line comment
+**/
+```
+- python
+```
+# This is a comment
+```
+
 ## Package Structure
 - Python has a hierarchical package structure  package.subpackage.subpackage
 ```
@@ -129,4 +156,56 @@ print('This is some print')
 python3 mod.py
 ```
 
-## Destructing
+## Destructuring
+- javascript
+```
+let foo = {
+    test1: 1
+    test2: 2
+}
+let {test2,test1} = foo
+```
+
+```
+let foo = [1,2]
+let [test1,test2] = foo
+```
+- python
+```
+foo = (1,2)
+(test1,test2)=foo
+print(test1)
+```
+```
+>>> foo = [1,2]
+>>> [head,*tail]= foo
+>>> print(head)
+1
+>>> print(tail)
+[2]
+```
+
+
+## Linting
+- javascript: eslint and prettier are 2 options here.  Prettier is more about getting a standard automatically
+```
+"scripts": {
+    "archetype:lint": "eslint -c node_modules/short-interval-control-archetype-lib-component/eslintrc.json --fix src test --ext .js",
+```
+Can be achieved through an archetype.
+Code is fixed automatically on each save.
+The eslintrc.json has the standard linting rules to apply
+
+- python : pylint
+```
+pylint 
+```
+??? How to set linting rules
+??? How to fix code automatically
+
+
+## Archytype
+The ability to define build tools in a library.
+- javascript : Common pattern in large frameworks, possible through [builder](https://www.npmjs.com/package/builder)
+- python : ???
+
