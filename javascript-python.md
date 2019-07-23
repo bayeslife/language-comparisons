@@ -1,18 +1,8 @@
-# Learning Python as a Javascript Developer
+# How To comparision of Python and Javascript
 
-Style
-- Google Python Style Guide: https://google.github.io/styleguide/pyguide.html 
-- PEP-008 Style Guide for Python Code: https://www.python.org/dev/peps/pep-0008/ 
-- PEP-257 Doc String Conventions: https://www.python.org/dev/peps/pep-0257/ 
-- PEP-020 The Zen of Python: https://www.python.org/dev/peps/pep-0020/ 
-- Hitchhiker’s Guide to Python: https://docs.python-guide.org/writing/style/
-- Documentation: https://realpython.com/documenting-python-code/ 
-
-Tooling
-- Linting: https://www.pylint.org/
-- Formatting: https://github.com/python/black
-- Testing: https://docs.pytest.org/en/latest/
-- Dependency Management: https://poetry.eustace.io/
+## Versions
+nodejs is up to version 12 now. Differences between versions is not significant.
+python2.7 seems a default on ubuntu...any reason.  Seem like major differences between 2 and 3.
 
 ## Comments
 - javascript: C style comments
@@ -105,7 +95,7 @@ Comment: Node allows multiple versions of any library to run so that there are n
 
 ## Running Tests
 
-- javascript : mocha, jest, ava, riteway - all unit test frameworks which provides ways to express sets of unit tests, with descriptions and expectations.
+- javascript : mocha, jest, ava, riteway - all unit test frameworks which provides ways to express sets of unit tests, with descriptions and expectations.  Some frameworks try to cater more for setup and teardown support, some are better at storing mocks or input/outputs to be used for subsequent tests.
 ```
 npm install riteway
 
@@ -129,6 +119,15 @@ riteway
 ```
 #install pytest
 pytest
+```
+```
+import pytest
+
+import src.hello
+
+#make sure to start function name with test
+def test_sum():
+    assert src.hello.sum(1, 2) == 3
 ```
 
 ## Debug Logging
@@ -185,6 +184,24 @@ print(test1)
 [2]
 ```
 
+## Dependency Management
+- javascript: provided through npm and yarn
+```
+npm init
+npm install <package>
+
+yarn init
+yarn add <package>
+```
+All packages are installing locally to the module by default.  There is a global install option as well which is sometimes used but mainly discouraged.
+Produces a package.lock.json or yarn.lock.json file which provides determinism.
+
+- python : poetry
+```
+poetry init
+poetry add <package>
+```
+??? is this different from pip in that it records dependencies for a particular project (as package.lock.json does)
 
 ## Linting
 - javascript: eslint and prettier are 2 options here.  Prettier is more about getting a standard automatically
@@ -204,8 +221,29 @@ pylint
 ??? How to fix code automatically
 
 
-## Archytype
+## Archetype
 The ability to define build tools in a library.
 - javascript : Common pattern in large frameworks, possible through [builder](https://www.npmjs.com/package/builder)
 - python : ???
 
+
+## Publish a library
+- javascript
+```
+npm publish
+```
+- python
+```
+poetry publish
+```
+
+## Creating a Docker image
+
+
+## How to run multiple versions at the same time
+- javascript: use [node version managaement](https://github.com/nvm-sh/nvm)
+- python: installs python2,python3.6,...
+```
+pyenv
+````
+??? not sure how separate the python configurations are
