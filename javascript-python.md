@@ -26,7 +26,6 @@ import module from '@namespace/module' //es6
 from pkg import module #this imports just module
 module.fun()
 
-
 import pkg.module #this imports both pkg and module
 pkg.module.function()
 
@@ -63,8 +62,7 @@ Comment: Node allows multiple versions of any library to run so that there are n
 npm clean-install (aka npm ci)
 ```
 - python
-Given that dependencies are not installed into the project this may not be meaningful
-
+Not sure if there is a standard way to remote the build/dist directories after a build.
 
 ## Public Repositories
 - javascript
@@ -76,7 +74,6 @@ It is a single flat namespace but anyone can purchase an '@namespace' to which o
 - python
 https://pypi.org/ - The main python repository?
 https://test.pypi.org - A test python repository you can publish to initially.
-
 
 ## Printing to stdout
 - javascript: console.log('something)
@@ -278,6 +275,7 @@ echo '//registry.npmjs.org/:_authToken='$NPM_TOKEN > ~/.npmrc
 npm publish
 ```
 - python
+using [setuptools](https://setuptools.readthedocs.io/en/latest/setuptools.html#developer-s-guide)
 define a setup.py file
 ```
 import setuptools
