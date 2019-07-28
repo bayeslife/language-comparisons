@@ -8,9 +8,6 @@ python2.7 seems a default on ubuntu...any reason.  Seem like major differences b
 - javascript: C style comments
 ```
 // This is a single line comment
-/**
-* THis is a multiple line comment
-**/
 ```
 - python
 ```
@@ -18,33 +15,68 @@ python2.7 seems a default on ubuntu...any reason.  Seem like major differences b
 ```
 
 ## Package Structure
-- Python has a hierarchical package structure  package.subpackage.subpackage
-```
-from pkg import module //this imports just module
-module.fun()
-
-
-import pkg.module //this imports both pkg and module
-pkg.module.function()
-
-?? can we import just a single function from a module
-?? can we hide functions in a module
-```
 - Javascript has a single @namespace/module structure
 ```
 let p = require('@namespace/module') //common js
 import module from '@namespace/module' //es6
 ```
 
+- Python has a hierarchical package structure  package.subpackage.subpackage
+```
+from pkg import module #this imports just module
+module.fun()
+
+
+import pkg.module #this imports both pkg and module
+pkg.module.function()
+
+?? can we import just a single function from a module
+?? can we hide functions in a module
+```
+
 ## Installing modules
-- npm or yarn install - installs modules in node_modules folder and preserves all version dependencies all the way down the dependency tree.
-- pip install (or conda install)
-Installing python modules from pip seems to dowload source and compile code while from conda retrieves binary.
-Both npm and yarn install source (almost exclusively)
+- javascript
+- installs modules in node_modules folder and preserves all version dependencies all the way down the dependency tree.
+```
+npm install
+or
+yarn install
+``` 
+- python
+```
+pip install
+python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps <pkg>
+
+conda install
+```
+Installing python modules from pip seems to dowload source and compiled code while from conda retrieves binary.
+
+Both npm and yarn install source (except when the module contains binary/platform specific code)
 
 Python dependencies install out of the module in ~/.local/lib/python so the dependencies seem to be shared
 Node dependencies are install for each dependency recursively.
 Comment: Node allows multiple versions of any library to run so that there are no conflicts when 2 modules use different versions of a 3rd module.
+
+## Clean Dependencies
+- javascript
+```
+npm clean-install (aka npm ci)
+```
+- python
+Given that dependencies are not installed into the project this may not be meaningful
+
+
+## Public Repositories
+- javascript
+npmjs.com - This is effectively a single public repository
+
+There is no 'test' repository.
+It is a single flat namespace but anyone can purchase an '@namespace' to which only they are allowed to publish to.
+
+- python
+https://pypi.org/ - The main python repository?
+https://test.pypi.org - A test python repository you can publish to initially.
+
 
 ## Printing to stdout
 - javascript: console.log('something)
@@ -227,13 +259,55 @@ The ability to define build tools in a library.
 - python : ???
 
 
-## Publish a library
+## Building a library
 - javascript
+With javascript there is no requirement to 'build' source code.  The `npm publish` command simply zips up the package.json and all source code which then is registered as a zip file.  The package.json file contains the meta data about what is the main file (usually index.js) and what is the source.
+
+- python
 ```
+poetry build
+```
+
+## Publish a library
+- javascript -
+It is easy to publish modules to the npm (public) registry. You need an account and then get an NPM_TOKEN which you install into the npmrc file
+
+```
+echo '//registry.npmjs.org/:_authToken='$NPM_TOKEN > ~/.npmrc
+
 npm publish
 ```
 - python
+define a setup.py file
 ```
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="pylib1-ptomq1",
+    version="0.1.0",
+    author="ptomq1",
+    author_email="ptomlinson@quartileone.com",
+    description="First public library",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/bayeslife/pylib1_ptomq1",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+)
+```
+Then build the distribution package and publish using twine
+```
+ python3 setup.py sdist bdist_wheel #builds the dist
+ python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/* # uploads to the test pypi repository
+```
+# alternative
 poetry publish
 ```
 
@@ -247,3 +321,18 @@ poetry publish
 pyenv
 ````
 ??? not sure how separate the python configurations are
+
+
+## Project Generator
+
+-javascript
+There is a project generator [here](https://gitlab.com/q1-packages/generator)
+```
+//After cloninig the repo, install it globally
+npm install -g
+
+//Then run it with
+generate
+```
+
+- python
